@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="CSS/style.css">
+<meta charset="utf-8">
+</head>
+<body>
+	<input type="text" id="year">
+	<input type="text" id="total">
+	<input type="checkbox" id="home">
+	<input type="checkbox" id="store">
+	<button type="button" id="print">Print</button>
+	<div id="instructions">Please enter the year and the PA amount in their respective boxes and then click on the In-Home or Carry-In checkboxes. <div>When you are ready to print the card click on Print. Click on refresh when you want to print another.</div></div>
+	<canvas id="c" width="400" height="500" style="background-image:url('Images/PA Card.jpg'); background-size: 4.25in 5.25in;"></canvas>
+	<script>
+		var c = document.querySelector("#c");
+		var ctx = c.getContext("2d");
+		var yearsChange = document.getElementById("year");
+		var totalsChange = document.getElementById("total");
+		var homeChecked = document.getElementById("home");
+		var storeChecked = document.getElementById("store");
+		var printButton = document.getElementById("print");
+		var instructionsChange = document.getElementById("instructions");
+		printButton.addEventListener("click", printClick, true);
+		homeChecked.addEventListener("click", homeChange, true);
+		storeChecked.addEventListener("click", storeChange, true);
+		yearsChange.addEventListener("change", onChanges, true);
+		totalsChange.addEventListener("change", onChanges, true);
+		var years = document.getElementById("year").value;
+		var totals = document.getElementById("total").value;
+		var maths = totals / (years * 12);
+		function homeChange() {
+			document.getElementById("store").checked = false;
+			onChanges();
+		}
+
+		function storeChange() {
+			document.getElementById("home").checked = false;
+			onChanges();
+		}
+
+		function onChanges() {
+			years = document.getElementById("year").value;
+			totals = document.getElementById("total").value;
+			if (years !== null ) {
+				ctx.clearRect(100, 175, 300, 50);
+				maths = (totals / (years * 12));
+				ctx.font = "30px Arial";
+				ctx.fillText(maths.toFixed(2) + " A Month", 100, 210);
+			}
+		}
+
+		function printClick() {
+			c.style.backgroundImage = "url('Images/blank.jpg')";
+			ctx.clearRect(0, 0, 400, 500);
+			ctx.font= "30px Arial";
+			ctx.fillText(maths.toFixed(2) + " A Month", 100, 110);
+
+			ctx.font= "80px Arial";
+			ctx.fillText(years, 190, 210);
+
+			ctx.font= "900 30px Arial";
+			if (homeChecked.checked == true) {
+				ctx.fillText("✓", 25, 295);
+			}
+			else if(storeChecked.checked == true) {
+				ctx.fillText("✓", 230, 295);
+			}
+
+			ctx.font= "12px Arial";
+			ctx.fillText(totals, 325, 325);
+			printButton.style.display ="none";
+			homeChecked.style.display = "none";
+			storeChecked.style.display = "none";
+			totalsChange.style.display = "none";
+			yearsChange.style.display = "none";
+			instructionsChange.style.display = "none";
+			window.resizeTo(400, 500);
+			window.print();
+		}
+
+
+	</script>
+
+</body>
+</html>
