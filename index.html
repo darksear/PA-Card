@@ -65,21 +65,21 @@
 			c.style.backgroundImage = "url('Images/blank.jpg')";
 			ctx.clearRect(0, 0, 400, 500);
 			ctx.font= "30px Arial";
-			ctx.fillText(maths.toFixed(2) + " A Month", 100, 110);
+			ctx.fillText(maths.toFixed(2) + " A Month", 100, 125);
 
 			ctx.font= "80px Arial";
-			ctx.fillText(years, 175, 210);
+			ctx.fillText(years, 175, 220);
 
 			ctx.font= "900 30px Arial";
 			if (homeChecked.checked == true) {
-				ctx.fillText("✓", 22, 293);
+				ctx.fillText("✓", 42, 293);
 			}
 			else if(storeChecked.checked == true) {
 				ctx.fillText("✓", 210, 295);
 			}
 
 			ctx.font= "12px Arial";
-			ctx.fillText(totals, 325, 325);
+			ctx.fillText(totals, 325, 318);
 			printButton.style.display ="none";
 			homeChecked.style.display = "none";
 			storeChecked.style.display = "none";
