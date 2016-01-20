@@ -6,14 +6,17 @@
 <meta charset="utf-8">
 </head>
 <body>
+	<!--Creating inputs-->
 	<input type="text" id="year">
 	<input type="text" id="total">
 	<input type="checkbox" id="home">
 	<input type="checkbox" id="store">
 	<button type="button" id="print">Print</button>
 	<div id="instructions">Please enter the year and the PA amount in their respective boxes and then click on the In-Home or Carry-In checkboxes. <div>When you are ready to print the card click on Print. Click on refresh when you want to print another.</div></div>
-	<canvas id="c" width="400" height="500" style="background-image:url('Images/PA Card.jpg'); background-size: 4.25in 5.25in;"></canvas>
+	<!--Initializing the canvas.-->
+	<canvas id="c" width="400" height="500"></canvas>
 	<script>
+		//creating variables
 		var c = document.querySelector("#c");
 		var ctx = c.getContext("2d");
 		var yearsChange = document.getElementById("year");
@@ -22,24 +25,30 @@
 		var storeChecked = document.getElementById("store");
 		var printButton = document.getElementById("print");
 		var instructionsChange = document.getElementById("instructions");
+		var years = document.getElementById("year").value;
+		var totals = document.getElementById("total").value;
+		var maths = totals / (years * 12);
+
+		//adding Listener Events
 		printButton.addEventListener("click", printClick, true);
 		homeChecked.addEventListener("click", homeChange, true);
 		storeChecked.addEventListener("click", storeChange, true);
 		yearsChange.addEventListener("change", onChanges, true);
 		totalsChange.addEventListener("change", onChanges, true);
-		var years = document.getElementById("year").value;
-		var totals = document.getElementById("total").value;
-		var maths = totals / (years * 12);
+
+		//removes check from home checkbox when store checkbox is clicked
 		function homeChange() {
 			document.getElementById("store").checked = false;
 			onChanges();
 		}
 
+		//removes check from store checkbox when home checkbox is clicked
 		function storeChange() {
 			document.getElementById("home").checked = false;
 			onChanges();
 		}
 
+		//clears the previous monthly pa and calculates and displays a new one
 		function onChanges() {
 			years = document.getElementById("year").value;
 			totals = document.getElementById("total").value;
@@ -51,6 +60,7 @@
 			}
 		}
 
+		//removes all buttons and background images displays a printer friendly screen and opens the print dialog.
 		function printClick() {
 			c.style.backgroundImage = "url('Images/blank.jpg')";
 			ctx.clearRect(0, 0, 400, 500);
@@ -58,14 +68,14 @@
 			ctx.fillText(maths.toFixed(2) + " A Month", 100, 110);
 
 			ctx.font= "80px Arial";
-			ctx.fillText(years, 190, 210);
+			ctx.fillText(years, 175, 210);
 
 			ctx.font= "900 30px Arial";
 			if (homeChecked.checked == true) {
-				ctx.fillText("✓", 25, 295);
+				ctx.fillText("✓", 22, 293);
 			}
 			else if(storeChecked.checked == true) {
-				ctx.fillText("✓", 230, 295);
+				ctx.fillText("✓", 210, 295);
 			}
 
 			ctx.font= "12px Arial";
@@ -79,9 +89,6 @@
 			window.resizeTo(400, 500);
 			window.print();
 		}
-
-
 	</script>
-
 </body>
 </html>
