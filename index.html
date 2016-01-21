@@ -3,6 +3,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="CSS/style.css">
+<script src="JS/dist/jspdf.debug.js"></script>
 <meta charset="utf-8">
 </head>
 <body>
@@ -28,6 +29,9 @@
 		var years = document.getElementById("year").value;
 		var totals = document.getElementById("total").value;
 		var maths = totals / (years * 12);
+		var imageToPrint = document.getElementById('c');
+		var printImage = imageToPrint.toDataURL("image/jpeg", 1.0);
+		var pdf = new jsPDF('p','in',[4, 5]);
 
 		//adding Listener Events
 		printButton.addEventListener("click", printClick, true);
@@ -86,8 +90,9 @@
 			totalsChange.style.display = "none";
 			yearsChange.style.display = "none";
 			instructionsChange.style.display = "none";
-			window.resizeTo(400, 500);
-			window.print();
+			pdf.addHTML(document.c, function() {
+				pdf.save('print.pdf');
+			});
 		}
 	</script>
 </body>
